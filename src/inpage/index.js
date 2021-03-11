@@ -1,30 +1,30 @@
-const { initializeProvider, shimWeb3 } = require('@metamask/inpage-provider')
+const { initializeProvider, shimWeb3 } = require('@ezDeFi/inpage-provider')
 const ObjectMultiplex = require('@metamask/object-multiplex')
 const pump = require('pump')
 const MobilePortStream = require('./MobilePortStream')
 const ReactNativePostMessageStream = require('./ReactNativePostMessageStream')
 
-const INPAGE = 'metamask-inpage'
-const CONTENT_SCRIPT = 'metamask-contentscript'
-const PROVIDER = 'metamask-provider'
+const INPAGE = 'ezDeFi-inpage'
+const CONTENT_SCRIPT = 'ezDeFi-contentscript'
+const PROVIDER = 'ezDeFi-provider'
 
 // Setup stream for content script communication
-const metamaskStream = new ReactNativePostMessageStream({
+const ezDeFiStream = new ReactNativePostMessageStream({
   name: INPAGE,
   target: CONTENT_SCRIPT,
 })
 
 // Initialize provider object (window.ethereum)
 initializeProvider({
-  connectionStream: metamaskStream,
+  connectionStream: ezDeFiStream,
   shouldSendMetadata: false,
 })
 
 // Set content script post-setup function
-Object.defineProperty(window, '_metamaskSetupProvider', {
+Object.defineProperty(window, '_ezDeFiSetupProvider', {
   value: () => {
     setupProviderStreams()
-    delete window._metamaskSetupProvider
+    delete window._ezDeFiSetupProvider
   },
   configurable: true,
   enumerable: false,
@@ -58,14 +58,14 @@ function setupProviderStreams () {
     pageMux,
     pageStream,
     pageMux,
-    (err) => logStreamDisconnectWarning('MetaMask Inpage Multiplex', err),
+    (err) => logStreamDisconnectWarning('ezDeFi Inpage Multiplex', err),
   )
   pump(
     appMux,
     appStream,
     appMux,
     (err) => {
-      logStreamDisconnectWarning('MetaMask Background Multiplex', err)
+      logStreamDisconnectWarning('ezDeFi Background Multiplex', err)
       notifyProviderOfStreamFailure()
     },
   )
@@ -91,7 +91,7 @@ function forwardTrafficBetweenMuxes (channelName, muxA, muxB) {
     channelA,
     channelB,
     channelA,
-    (err) => logStreamDisconnectWarning(`MetaMask muxed traffic for channel "${channelName}" failed.`, err),
+    (err) => logStreamDisconnectWarning(`ezDeFi muxed traffic for channel "${channelName}" failed.`, err),
   )
 }
 
@@ -102,7 +102,7 @@ function forwardTrafficBetweenMuxes (channelName, muxA, muxB) {
  * @param {Error} err - Stream connection error
  */
 function logStreamDisconnectWarning (remoteLabel, err) {
-  let warningMsg = `MetamaskContentscript - lost connection to ${remoteLabel}`
+  let warningMsg = `ezDeFiContentscript - lost connection to ${remoteLabel}`
   if (err) {
     warningMsg += `\n${err.stack}`
   }
@@ -113,7 +113,7 @@ function logStreamDisconnectWarning (remoteLabel, err) {
 /**
  * This function must ONLY be called in pump destruction/close callbacks.
  * Notifies the inpage context that streams have failed, via window.postMessage.
- * Relies on @metamask/object-multiplex and post-message-stream implementation details.
+ * Relies on @ezDeFi/object-multiplex and post-message-stream implementation details.
  */
 function notifyProviderOfStreamFailure () {
   window.postMessage(
@@ -124,7 +124,7 @@ function notifyProviderOfStreamFailure () {
         name: PROVIDER, // the object-multiplex channel name
         data: {
           jsonrpc: '2.0',
-          method: 'METAMASK_STREAM_FAILURE',
+          method: 'ezDeFi_STREAM_FAILURE',
         },
       },
     },

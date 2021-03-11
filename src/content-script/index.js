@@ -13,7 +13,7 @@ if (shouldInject()) {
  */
 async function start () {
   await domIsReady()
-  window._metamaskSetupProvider()
+  window._ezDeFiSetupProvider()
 }
 
 /**
@@ -35,7 +35,7 @@ function injectScript (content) {
     // script executed; remove script element from DOM
     container.removeChild(scriptTag)
   } catch (err) {
-    console.error('MetaMask script injection failed', err)
+    console.error('ezDeFi script injection failed', err)
   }
 }
 

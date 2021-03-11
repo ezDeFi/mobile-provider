@@ -1,5 +1,5 @@
 {
-  "name": "@metamask/mobile-provider",
+  "name": "@ezdefi/mobile-provider",
   "version": "2.0.1",
   "main": "dist/index.js",
   "scripts": {
@@ -15,19 +15,20 @@
     "build:dev:bundle": "webpack --mode=development --config webpack.config.js",
     "lint": "eslint . --ext js,json",
     "lint:fix": "eslint . --ext js,json --fix",
+    "postinstall": "cd node_modules/@ezDeFi/inpage-provider && yarn install && yarn build",
     "prepublishOnly": "yarn build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MetaMask/mobile-provider.git"
+    "url": "git+https://github.com/ezDeFi/mobile-provider.git"
   },
-  "author": "MetaMask",
+  "author": "ezDeFi",
   "license": "ISC",
-  "description": "The JavaScript injected into every web page in the MetaMask Mobile browser.",
+  "description": "The JavaScript injected into every web page in the ezDeFi Mobile browser.",
   "bugs": {
-    "url": "https://github.com/MetaMask/mobile-provider/issues"
+    "url": "https://github.com/ezDeFi/mobile-provider/issues"
   },
-  "homepage": "https://github.com/MetaMask/mobile-provider#readme",
+  "homepage": "https://github.com/ezDeFi/mobile-provider#readme",
   "files": [
     "dist/index.js"
   ],
@@ -37,7 +38,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "@babel/preset-env": "^7.12.7",
     "@metamask/eslint-config": "^4.1.0",
-    "@metamask/inpage-provider": "^8.0.3",
+    "@ezDeFi/inpage-provider": "git+https://github.com/ezDeFi/inpage-provider.git",
     "@metamask/object-multiplex": "^1.1.0",
     "babel-loader": "^8.0.6",
     "concat-cli": "^4.0.0",
