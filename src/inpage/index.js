@@ -4,9 +4,9 @@ const pump = require('pump')
 const MobilePortStream = require('./MobilePortStream')
 const ReactNativePostMessageStream = require('./ReactNativePostMessageStream')
 
-const INPAGE = 'ezDeFi-inpage'
-const CONTENT_SCRIPT = 'ezDeFi-contentscript'
-const PROVIDER = 'ezDeFi-provider'
+const INPAGE = 'ezdefi-inpage'
+const CONTENT_SCRIPT = 'ezdefi-contentscript'
+const PROVIDER = 'ezdefi-provider'
 
 // Setup stream for content script communication
 const ezDeFiStream = new ReactNativePostMessageStream({
@@ -124,7 +124,7 @@ function notifyProviderOfStreamFailure () {
         name: PROVIDER, // the object-multiplex channel name
         data: {
           jsonrpc: '2.0',
-          method: 'ezDeFi_STREAM_FAILURE',
+          method: 'EZDEFI_STREAM_FAILURE',
         },
       },
     },

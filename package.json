@@ -15,7 +15,6 @@
     "build:dev:bundle": "webpack --mode=development --config webpack.config.js",
     "lint": "eslint . --ext js,json",
     "lint:fix": "eslint . --ext js,json --fix",
-    "postinstall": "cd ../inpage-provider && yarn && yarn build",
     "prepublishOnly": "yarn build"
   },
   "repository": {
@@ -49,6 +48,6 @@
     "pump": "^3.0.0",
     "readable-stream": "^2.3.7",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   }
 }
